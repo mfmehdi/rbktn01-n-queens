@@ -1,3 +1,7 @@
+
+
+
+
 describe('Board', function() {
 
   var capitalize = function(word) {

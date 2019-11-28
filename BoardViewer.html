@@ -10,15 +10,14 @@
       }
 
       .positive {
-        background-color: lightgrey;
+        background-color: #eee;
       }
-
       .negative {
-        background-color: grey;
+        background-color: #444;
       }
 
       .inConflict{
-          background-color: red;
+          background-color: #ff1d03a8;
       }
     </style>
   </head>
@@ -34,7 +33,7 @@
       window.displayBoard = function(matrix){
         $('body').html(
           new BoardView({
-            model: new Board(matrix)
+            model: new Board({n : 6})
           }).render()
         );
       };
@@ -47,7 +46,7 @@
           [0, 0, 1, 0]
         ]);
 
-        var n = 4;
+        var n = 5;
         findNRooksSolution(n);
         countNRooksSolutions(n);
         findNQueensSolution(n);
