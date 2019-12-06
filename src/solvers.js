@@ -41,16 +41,44 @@ return Object.values(solution.attributes).slice(0, this.length -1);
 
 // return the number of nxn chessboards that exist, with n rooks placed such that none of them can attack each other
 window.countNRooksSolutions = function(n) {
-  var solutionCount = undefined;
-   //fixme
-   function innerFunction(n){
-   	if(n === 1){
-   		return 1;
-   	}
-   	return n * innerFunction(n-1)
-   }
-   solutionCount = innerFunction(n)
-  console.log('Number of solutions for ' + n + ' rooks:', solutionCount);
+   var solutionCount = solutionCount ||0;
+   var board = new Board({n : n});
+  //  //fixme
+  //  function innerFunction(n){
+  //  	if(n === 1){
+  //  		return 1;
+  //  	}
+  //  	return n * innerFunction(n-1)
+  //  }
+  //  solutionCount = innerFunction(n)
+  function rec(row = 0){
+    //console.log(solutionCount +"  ********************  "+row)
+    
+ if(row  < n){ 
+
+  for (var i = 0; i < n; i++) {
+     // console.log( "  i==>  "+i)
+     //console.log(board)
+    board.togglePiece(row,i);
+    if(!board.hasAnyRooksConflicts()){
+      if(row === n-1){
+        solutionCount++ ;
+       // console.log(solutionCount +"  sollllllllllllllllllll  row "+row)
+       board.togglePiece(row,i);
+       return;
+      }
+      rec(row+1);
+     } board.togglePiece(row,i);
+    // else{
+    //   board.togglePiece(row,i);
+    // }
+    
+  } 
+}
+
+  }
+  rec();
+   console.log('Number of solutions for ' + n + ' rooks:', solutionCount);
   return solutionCount;
 };
 
@@ -60,14 +88,14 @@ window.findNQueensSolution = function(n) {
 var solution =0
    countNQueensSolutions(n,function(a){
    	solution= _.map(a.rows(),function(row){
-   		console.log("===> "+ a)
-   			console.log( a)
+   //		console.log("===> "+ a)
+   	//		console.log( a)
    		return row.slice() 
    	})|| board.rows()
    })
 
 
- console.log('Single solution for ' + n + ' queens:', JSON.stringify(solution));
+ //console.log('Single solution for ' + n + ' queens:', JSON.stringify(solution));
   return solution;
 };
 
@@ -77,10 +105,10 @@ var solutionCount = 0; //fixme
 var board = new Board({n : n});
 
 function innerFunction (board ,row, callback){
-callback = callback || console.log
+callback = callback || (console.log)
 if(row === n){
 	solutionCount++;
-	callback(board);
+	//callback(board);
 	return;
 }
 
@@ -95,6 +123,6 @@ if(row === n){
 }
 
 innerFunction (board ,0,callback)
-  console.log('Number of solutions for ' + n + ' queens:', solutionCount);
+ // console.log('Number of solutions for ' + n + ' queens:', solutionCount);
   return solutionCount;
 };
